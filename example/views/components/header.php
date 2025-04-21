@@ -6,6 +6,7 @@
     <title><?= $title ?? 'SendMate Payment Demo' ?></title>
     <script src="https://cdn.tailwindcss.com"></script>
 
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -21,6 +22,7 @@
         }
         .form-input {
           border: 1px solid #d1d5db;
+          @apply block w-full pl-16 pr-3 py-3 text-base rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white;
         }
     </style>
 </head>
