@@ -8,7 +8,7 @@ use SendMate\Checkout;
 
 class SendMate
 {
-    // private Wallet $wallet;
+    private Wallet $wallet;
     private Collection $collection;
     private Checkout $checkout;
 
@@ -16,12 +16,13 @@ class SendMate
     {
         $this->collection = new Collection($apiKey, $publishableKey, $isSandbox);
         $this->checkout = new Checkout($apiKey, $publishableKey, $isSandbox);
+        $this->wallet = new Wallet($apiKey, $publishableKey, $isSandbox);
     }
 
-    // public function wallet(): Wallet
-    // {
-    //     return $this->wallet;
-    // }
+    public function wallet(): Wallet
+    {
+        return $this->wallet;
+    }
 
     public function collection(): Collection
     {
