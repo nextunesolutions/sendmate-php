@@ -9,22 +9,22 @@ include __DIR__ . '/components/header.php';
         <div>
             <label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
             <input type="number" id="amount" name="amount" required
-                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                   class="form-input block w-full pl-16 pr-3 py-3 text-base rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white">
         </div>
 
         <div>
             <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
             <input type="text" id="description" name="description"
-                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                   class="form-input block w-full pl-16 pr-3 py-3 text-base rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white">
         </div>
 
         <div>
             <label for="currency" class="block text-sm font-medium text-gray-700">Currency</label>
             <select id="currency" name="currency"
-                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    class="form-input block w-full pl-16 pr-3 py-3 text-base rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white">
                 <option value="KES">KES</option>
-                <option value="USD">USD</option>
-                <option value="EUR">EUR</option>
+                <!-- <option value="USD">USD</option> -->
+                <!-- <option value="EUR">EUR</option> -->
             </select>
         </div>
 

@@ -2,6 +2,11 @@
 
 use SendMate\SendMate;
 
+/**
+ * Handles the creation of a new checkout session
+ * 
+ * @param SendMate $sendmate The SendMate instance
+ */
 function handleCheckout(SendMate $sendmate) {
     header('Content-Type: application/json');
     
@@ -19,7 +24,7 @@ function handleCheckout(SendMate $sendmate) {
             return;
         }
 
-        $session = $sendmate->checkout()->create([
+        $session = $sendmate->checkout()->create_checkout_session([
             'amount' => $amount,
             'description' => $description,
             'currency' => $currency,
@@ -44,11 +49,17 @@ function handleCheckout(SendMate $sendmate) {
     }
 }
 
+/**
+ * Handles checking the status of a checkout session
+ * 
+ * @param SendMate $sendmate The SendMate instance
+ * @param string $sessionId The session ID to check
+ */
 function handleSessionStatus(SendMate $sendmate, string $sessionId) {
     header('Content-Type: application/json');
     
     try {
-        $status = $sendmate->checkout()->get($sessionId);
+        $status = $sendmate->checkout()->get_checkout_session_status($sessionId);
         
         echo json_encode([
             'success' => true,
