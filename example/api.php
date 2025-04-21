@@ -41,10 +41,13 @@ function handleApiRoutes(SendMate $sendmate) {
                 handleGetWallets($sendmate);
             }
             break;
-        case (preg_match('/^\/api\/wallets\/(.+)$/', $path, $matches) ? true : false):
+        case (preg_match('/^\/api\/wallets\/([^\/]+)$/', $path, $matches) ? true : false):
             if ($method === 'GET') {
                 handleGetWallet($sendmate, $matches[1]);
-            } elseif ($method === 'POST' && strpos($path, '/set-default') !== false) {
+            }
+            break;
+        case (preg_match('/^\/api\/wallets\/([^\/]+)\/set-default$/', $path, $matches) ? true : false):
+            if ($method === 'POST') {
                 handleSetDefaultWallet($sendmate, $matches[1]);
             }
             break;

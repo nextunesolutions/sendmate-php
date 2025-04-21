@@ -69,10 +69,14 @@ function handleSetDefaultWallet(SendMate $sendmate, string $walletId) {
             return;
         }
 
-        echo json_encode([
-            'success' => true,
-            'data' => $result
-        ]);
+        // echo json_encode([
+        //     'success' => true,
+        //     'data' => $result
+        // ]);
+
+        // here lets redirect to the wallets page
+        header('Location: /wallets/');
+        exit;
     } catch (Exception $e) {
         http_response_code(500);
         echo json_encode([
