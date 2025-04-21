@@ -35,8 +35,8 @@ function handleCheckout(SendMate $sendmate) {
         echo json_encode([
             'success' => true,
             'data' => [
-                'session_id' => $session->session_id,
-                'url' => $session->url
+                'session_id' => $session['session_id'],
+                'url' => $session['url']
             ]
         ]);
     } catch (Exception $e) {

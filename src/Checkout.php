@@ -36,7 +36,7 @@ class Checkout
      * @return array
      * @throws GuzzleException
      */
-    public function create_checkout_session(array $data)
+    public function create_checkout_session(array $data): array
     {
         try {
             return $this->post('/payments/checkout', $data);
@@ -53,7 +53,7 @@ class Checkout
      * @return array
      * @throws GuzzleException
      */
-    public function get_sessions()
+    public function get_sessions(): array
     {
         try {
             return $this->get('/payments/sessions');
@@ -70,7 +70,7 @@ class Checkout
      * @return array
      * @throws GuzzleException
      */
-    public function get_checkout_session(string $session_id)
+    public function get_checkout_session(string $session_id): array
     {
         try {
             return $this->get("/payments/checkout/{$session_id}");
@@ -87,7 +87,7 @@ class Checkout
      * @return array
      * @throws GuzzleException
      */
-    public function get_checkout_session_status(string $session_id)
+    public function get_checkout_session_status(string $session_id): array
     {
         try {
             return $this->get("/payments/checkout/{$session_id}/verify");

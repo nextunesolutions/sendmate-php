@@ -35,10 +35,11 @@ trait BaseApi
     /**
      * @throws GuzzleException
      */
-    public function get(string $path, array $query = []): ResponseInterface
+    public function get(string $path, array $query = []): array
     {
         try{
-            return $this->parseResponse($this->client->get("/v1{$path}", ['query' => $query]));
+            $response = $this->client->get("/v1{$path}", ['query' => $query]);
+            return $this->parseResponse($response);
         } catch (GuzzleException $e) {
             error_log("[SendMate API] Failed to get resource at {$path}: " . $e->getMessage());
             throw $e;
@@ -48,10 +49,11 @@ trait BaseApi
     /**
      * @throws GuzzleException
      */
-    public function post(string $path, array $data = []): ResponseInterface
+    public function post(string $path, array $data = []): array
     {
         try{
-            return $this->parseResponse($this->client->post("/v1{$path}", ['json' => $data]));
+            $response = $this->client->post("/v1{$path}", ['json' => $data]);
+            return $this->parseResponse($response);
         } catch (GuzzleException $e) {
             error_log("[SendMate API] Failed to create resource at {$path}: " . $e->getMessage());
             throw $e;
@@ -61,10 +63,11 @@ trait BaseApi
     /**
      * @throws GuzzleException
      */
-    public function put(string $path, array $data = []): ResponseInterface
+    public function put(string $path, array $data = []): array
     {
         try{
-            return $this->parseResponse($this->client->put("/v1{$path}", ['json' => $data]));
+            $response = $this->client->put("/v1{$path}", ['json' => $data]);
+            return $this->parseResponse($response);
         } catch (GuzzleException $e) {
             error_log("[SendMate API] Failed to update resource at {$path}: " . $e->getMessage());
             throw $e;
@@ -74,11 +77,11 @@ trait BaseApi
     /**
      * @throws GuzzleException
      */
-    public function delete(string $path): ResponseInterface
-        
+    public function delete(string $path): array
     {
         try{
-            return $this->parseResponse($this->client->delete("/v1{$path}"));
+            $response = $this->client->delete("/v1{$path}");
+            return $this->parseResponse($response);
         } catch (GuzzleException $e) {
             error_log("[SendMate API] Failed to delete resource at {$path}: " . $e->getMessage());
             throw $e;
