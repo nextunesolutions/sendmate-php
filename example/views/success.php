@@ -62,7 +62,7 @@ try {
                 </div>
                 <div class="flex justify-between">
                     <span class="text-gray-600">Reference:</span>
-                    <span class="font-medium text-sm"><?= htmlspecialchars($payment['id']) ?></span>
+                    <span class="font-medium text-sm"><?= htmlspecialchars($payment['reference']) ?></span>
                 </div>
             </div>
         </div>
