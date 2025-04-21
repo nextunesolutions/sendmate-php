@@ -1,5 +1,5 @@
-    </div> <!-- End of container -->
-
+    </div>
+    </main>
     <footer class="bg-white shadow-sm mt-auto">
         <div class="container mx-auto px-4 py-6">
             <div class="flex justify-between items-center">

@@ -5,30 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $title ?? 'SendMate Payment Demo' ?></title>
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+        input[type="number"] {
+          -moz-appearance: textfield;
+        }
+        .form-input {
+          border: 1px solid #d1d5db;
+        }
+    </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col">
-    <!-- <header class="bg-white shadow-sm">
-        <div class="container mx-auto px-4 py-4">
-            <div class="flex justify-between items-center">
-                <a href="/" class="text-2xl font-bold text-blue-600">SendMate</a>
-                <nav>
-                    <ul class="flex space-x-4">
-                        <li><a href="/" class="text-gray-600 hover:text-blue-600">Home</a></li>
-                        <li><a href="/checkout" class="text-gray-600 hover:text-blue-600">Card Payment</a></li>
-                        <li><a href="/mpesa" class="text-gray-600 hover:text-blue-600">M-Pesa</a></li>
-                    </ul>
-                </nav>
+
+
+<nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/" class="text-xl font-bold text-indigo-600">SendMate</a>
+                </div>
             </div>
         </div>
-    </header> -->
+    </nav>
+    
 
-    <div class="container mx-auto px-4 py-8 flex-grow">
+    <main class="flex-grow">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+
+    <!-- <div class="container mx-auto px-4 py-8 flex-grow">
         <div class="mb-8">
             <h1 class="text-3xl font-bold"><?= $title ?? 'SendMate Payment Demo' ?></h1>
             <?php if (isset($description)): ?>
                 <p class="text-gray-600 mt-2"><?= htmlspecialchars($description) ?></p>
             <?php endif; ?>
-        </div>
+        </div> -->
 
 
                 

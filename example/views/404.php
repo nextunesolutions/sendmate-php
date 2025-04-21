@@ -1,7 +1,7 @@
 <?php
 $title = 'Page Not Found';
 $description = 'The page you are looking for does not exist';
-require __DIR__ . '/layout.php';
+include __DIR__ . '/components/header.php';
 ?>
 
 <div class="max-w-md mx-auto bg-white rounded-lg shadow-md p-6 text-center">
@@ -18,3 +18,7 @@ require __DIR__ . '/layout.php';
         Return Home
     </a>
 </div> 
+
+<?php
+include __DIR__ . '/components/footer.php';
+?> 
