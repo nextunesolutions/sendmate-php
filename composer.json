@@ -1,5 +1,5 @@
 {
-    "name": "sendmate/php-sdk",
+    "name": "sendmate/sendmate-php",
     "description": "SendMate PHP SDK for payment processing and wallet management",
     "type": "library",
     "license": "MIT",
