@@ -1,6 +1,7 @@
 <?php
-$content = __FILE__;
-require __DIR__ . '/layout.php';
+$title = 'SendMate Payment Demo';
+$description = 'Choose your preferred payment method';
+include __DIR__ . '/components/header.php';
 ?>
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -21,4 +22,8 @@ require __DIR__ . '/layout.php';
             Pay with M-Pesa
         </a>
     </div>
-</div> 
+</div>
+
+<?php
+include __DIR__ . '/components/footer.php';
+?> 

@@ -1,6 +1,7 @@
 <?php
-$content = __FILE__;
-require __DIR__ . '/layout.php';
+$title = 'M-Pesa Payment Successful';
+$description = 'Your M-Pesa payment was processed successfully';
+include __DIR__ . '/components/header.php';
 ?>
 
 <div class="max-w-md mx-auto bg-white rounded-lg shadow-md p-6 text-center">
@@ -36,4 +37,8 @@ require __DIR__ . '/layout.php';
     <a href="/" class="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600">
         Return Home
     </a>
-</div> 
+</div>
+
+<?php
+include __DIR__ . '/components/footer.php';
+?> 

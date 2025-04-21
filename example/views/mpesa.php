@@ -1,6 +1,7 @@
 <?php
-$content = __FILE__;
-require __DIR__ . '/layout.php';
+$title = 'M-Pesa Payment';
+$description = 'Make a payment using M-Pesa';
+include __DIR__ . '/components/header.php';
 ?>
 
 <div class="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
@@ -99,4 +100,8 @@ async function checkPaymentStatus() {
         console.error('Error checking status:', error);
     }
 }
-</script> 
+</script>
+
+<?php
+include __DIR__ . '/components/footer.php';
+?> 

@@ -1,5 +1,5 @@
 #!/bin/bash
 
 
-cd example && php -S 0.0.0.0:9000 
+cd example && php -S 0.0.0.0:9000 index.php 
 

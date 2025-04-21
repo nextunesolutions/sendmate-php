@@ -1,5 +1,6 @@
 <?php
-$content = __FILE__;
+$title = 'Page Not Found';
+$description = 'The page you are looking for does not exist';
 require __DIR__ . '/layout.php';
 ?>
 
