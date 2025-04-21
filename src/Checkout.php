@@ -2,17 +2,17 @@
 
 namespace SendMate;
 
-use SendMate\Request;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
-
-class Checkout
+use SendMate\BaseApi;
+class Checkout 
 {
-    private Request $request;
 
-    public function __construct(Request $request)
+    use BaseApi;
+
+    public function __construct(string $apiKey, string $publishableKey, bool $isSandbox = false)
     {
-        $this->request = $request;
+        $this->init_trait($apiKey, $publishableKey, $isSandbox);
     }
 
     /**
@@ -20,7 +20,7 @@ class Checkout
      */
     public function create(array $data): ResponseInterface
     {
-        return $this->request->post('/checkouts', $data);
+        return $this->post('/checkouts', $data);
     }
 
     /**
@@ -28,7 +28,7 @@ class Checkout
      */
     public function get(string $checkoutId): ResponseInterface
     {
-        return $this->request->get("/checkouts/{$checkoutId}");
+        return $this->get("/checkouts/{$checkoutId}");
     }
 
     /**
@@ -36,7 +36,7 @@ class Checkout
      */
     public function list(array $query = []): ResponseInterface
     {
-        return $this->request->get('/checkouts', $query);
+        return $this->get('/checkouts', $query);
     }
 
     /**
@@ -44,6 +44,6 @@ class Checkout
      */
     public function cancel(string $checkoutId): ResponseInterface
     {
-        return $this->request->post("/checkouts/{$checkoutId}/cancel");
+        return $this->post("/checkouts/{$checkoutId}/cancel");
     }
 } 

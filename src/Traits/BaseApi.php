@@ -12,7 +12,7 @@ trait BaseApi
     private string $apiKey;
     private string $publishableKey;
 
-    public function __construct(string $apiKey, string $publishableKey, bool $isSandbox = false)
+    public function init_trait(string $apiKey, string $publishableKey, bool $isSandbox = false)
     {
         $this->apiKey = $apiKey;
         $this->publishableKey = $publishableKey;

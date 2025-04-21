@@ -2,17 +2,16 @@
 
 namespace SendMate;
 
-use SendMate\Request;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
-
+use SendMate\BaseApi;
 class Collection
 {
-    private Request $request;
+    use BaseApi;
 
-    public function __construct(Request $request)
+    public function __construct(string $apiKey, string $publishableKey, bool $isSandbox = false)
     {
-        $this->request = $request;
+        $this->init_trait($apiKey, $publishableKey, $isSandbox);
     }
 
     /**
@@ -20,7 +19,7 @@ class Collection
      */
     public function initiate(array $data): ResponseInterface
     {
-        return $this->request->post('/collections', $data);
+        return $this->post('/collections', $data);
     }
 
     /**
@@ -28,7 +27,7 @@ class Collection
      */
     public function get(string $collectionId): ResponseInterface
     {
-        return $this->request->get("/collections/{$collectionId}");
+        return $this->get("/collections/{$collectionId}");
     }
 
     /**
@@ -36,7 +35,7 @@ class Collection
      */
     public function list(array $query = []): ResponseInterface
     {
-        return $this->request->get('/collections', $query);
+        return $this->get('/collections', $query);
     }
 
     /**
@@ -44,6 +43,6 @@ class Collection
      */
     public function cancel(string $collectionId): ResponseInterface
     {
-        return $this->request->post("/collections/{$collectionId}/cancel");
+        return $this->post("/collections/{$collectionId}/cancel");
     }
 } 
