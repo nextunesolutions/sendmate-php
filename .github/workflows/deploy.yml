@@ -1,0 +1,68 @@
+name: Deploy to Packagist
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          extensions: mbstring, xml, ctype, iconv, intl, json, pdo, dom, fileinfo, tokenizer
+          coverage: none
+
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
+
+      - name: Run tests
+        run: composer test
+
+      - name: Run linting
+        run: composer lint
+
+      - name: Run static analysis
+        run: composer stan
+
+      - name: Configure git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+      - name: Create tag
+        run: |
+          TAG=$(echo $GITHUB_REF | cut -d'/' -f3)
+          git tag -a $TAG -m "Release $TAG"
+          git push origin $TAG
+
+      - name: Deploy to Packagist
+        env:
+          PACKAGIST_TOKEN: ${{ secrets.PACKAGIST_TOKEN }}
+          PACKAGIST_USERNAME: ${{ secrets.PACKAGIST_USERNAME }}
+        run: |
+          curl -X POST \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $PACKAGIST_TOKEN" \
+            -d '{"repository":{"url":"https://github.com/${{ github.repository }}"}}' \
+            https://packagist.org/api/update-package?username=$PACKAGIST_USERNAME
+            
