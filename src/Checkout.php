@@ -5,9 +5,9 @@ namespace SendMate;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
 use SendMate\Traits\BaseApi;
+
 class Checkout 
 {
-
     use BaseApi;
 
     public function __construct(string $apiKey, string $publishableKey, bool $isSandbox = false)
@@ -20,7 +20,13 @@ class Checkout
      */
     public function create(array $data): ResponseInterface
     {
-        return $this->post('/checkouts', $data);
+        try {
+            return $this->post('/checkouts', $data);
+        } catch (GuzzleException $e) {
+            error_log("[SendMate Checkout] Failed to create checkout: " . $e->getMessage());
+            error_log("[SendMate Checkout] Request data: " . json_encode($data));
+            throw $e;
+        }
     }
 
     /**
@@ -28,7 +34,12 @@ class Checkout
      */
     public function get(string $checkoutId): ResponseInterface
     {
-        return $this->get("/checkouts/{$checkoutId}");
+        try {
+            return $this->get("/checkouts/{$checkoutId}");
+        } catch (GuzzleException $e) {
+            error_log("[SendMate Checkout] Failed to get checkout {$checkoutId}: " . $e->getMessage());
+            throw $e;
+        }
     }
 
     /**
@@ -36,7 +47,13 @@ class Checkout
      */
     public function list(array $query = []): ResponseInterface
     {
-        return $this->get('/checkouts', $query);
+        try {
+            return $this->get('/checkouts', $query);
+        } catch (GuzzleException $e) {
+            error_log("[SendMate Checkout] Failed to list checkouts: " . $e->getMessage());
+            error_log("[SendMate Checkout] Query parameters: " . json_encode($query));
+            throw $e;
+        }
     }
 
     /**
@@ -44,6 +61,11 @@ class Checkout
      */
     public function cancel(string $checkoutId): ResponseInterface
     {
-        return $this->post("/checkouts/{$checkoutId}/cancel");
+        try {
+            return $this->post("/checkouts/{$checkoutId}/cancel");
+        } catch (GuzzleException $e) {
+            error_log("[SendMate Checkout] Failed to cancel checkout {$checkoutId}: " . $e->getMessage());
+            throw $e;
+        }
     }
 } 

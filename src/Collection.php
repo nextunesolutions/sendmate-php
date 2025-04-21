@@ -5,6 +5,7 @@ namespace SendMate;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
 use SendMate\Traits\BaseApi;
+
 class Collection
 {
     use BaseApi;
@@ -19,7 +20,13 @@ class Collection
      */
     public function initiate(array $data): ResponseInterface
     {
-        return $this->post('/collections', $data);
+        try {
+            return $this->post('/collections', $data);
+        } catch (GuzzleException $e) {
+            error_log("[SendMate Collection] Failed to initiate collection: " . $e->getMessage());
+            error_log("[SendMate Collection] Request data: " . json_encode($data));
+            throw $e;
+        }
     }
 
     /**
@@ -27,7 +34,12 @@ class Collection
      */
     public function get(string $collectionId): ResponseInterface
     {
-        return $this->get("/collections/{$collectionId}");
+        try {
+            return $this->get("/collections/{$collectionId}");
+        } catch (GuzzleException $e) {
+            error_log("[SendMate Collection] Failed to get collection {$collectionId}: " . $e->getMessage());
+            throw $e;
+        }
     }
 
     /**
@@ -35,7 +47,13 @@ class Collection
      */
     public function list(array $query = []): ResponseInterface
     {
-        return $this->get('/collections', $query);
+        try {
+            return $this->get('/collections', $query);
+        } catch (GuzzleException $e) {
+            error_log("[SendMate Collection] Failed to list collections: " . $e->getMessage());
+            error_log("[SendMate Collection] Query parameters: " . json_encode($query));
+            throw $e;
+        }
     }
 
     /**
@@ -43,6 +61,11 @@ class Collection
      */
     public function cancel(string $collectionId): ResponseInterface
     {
-        return $this->post("/collections/{$collectionId}/cancel");
+        try {
+            return $this->post("/collections/{$collectionId}/cancel");
+        } catch (GuzzleException $e) {
+            error_log("[SendMate Collection] Failed to cancel collection {$collectionId}: " . $e->getMessage());
+            throw $e;
+        }
     }
 } 

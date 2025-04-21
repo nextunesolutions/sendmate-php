@@ -21,7 +21,12 @@ class Wallet
      */
     public function getWallets(): ResponseInterface
     {
-        return $this->get('/payments/wallets');
+        try {
+            return $this->get('/payments/wallets');
+        } catch (GuzzleException $e) {
+            error_log("[SendMate Wallet] Failed to get wallets: " . $e->getMessage());
+            throw $e;
+        }
     }
 
     /**
@@ -30,7 +35,12 @@ class Wallet
      */
     public function getWallet(string $walletId): ResponseInterface
     {
-        return $this->get("/payments/wallets/{$walletId}");
+        try {
+            return $this->get("/payments/wallets/{$walletId}");
+        } catch (GuzzleException $e) {
+            error_log("[SendMate Wallet] Failed to get wallet {$walletId}: " . $e->getMessage());
+            throw $e;
+        }
     }
 
     /**
@@ -39,7 +49,13 @@ class Wallet
      */
     public function getWalletTransactions(string $walletId, array $params = []): ResponseInterface
     {
-        return $this->get("/payments/wallets/{$walletId}/transactions", $params);
+        try {
+            return $this->get("/payments/wallets/{$walletId}/transactions", $params);
+        } catch (GuzzleException $e) {
+            error_log("[SendMate Wallet] Failed to get transactions for wallet {$walletId}: " . $e->getMessage());
+            error_log("[SendMate Wallet] Query parameters: " . json_encode($params));
+            throw $e;
+        }
     }
 
     /**
@@ -48,6 +64,11 @@ class Wallet
      */
     public function setDefaultWallet(string $walletId): ResponseInterface
     {
-        return $this->post("/payments/wallets/{$walletId}/set-default", []);
+        try {
+            return $this->post("/payments/wallets/{$walletId}/set-default", []);
+        } catch (GuzzleException $e) {
+            error_log("[SendMate Wallet] Failed to set wallet {$walletId} as default: " . $e->getMessage());
+            throw $e;
+        }
     }
 } 
