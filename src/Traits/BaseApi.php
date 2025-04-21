@@ -1,6 +1,6 @@
 <?php
 
-namespace SendMate;
+namespace SendMate\Traits;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;

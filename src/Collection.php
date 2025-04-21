@@ -4,7 +4,7 @@ namespace SendMate;
 
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
-use SendMate\BaseApi;
+use SendMate\Traits\BaseApi;
 class Collection
 {
     use BaseApi;
