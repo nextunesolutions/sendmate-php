@@ -1,5 +1,7 @@
 #!/bin/bash
 
+params="$@"
 
-cd example && php -S 0.0.0.0:9000 index.php 
+docker-compose  up $params
+
 
