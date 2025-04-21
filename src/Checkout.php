@@ -90,7 +90,7 @@ class Checkout
     public function get_checkout_session_status(string $session_id): array
     {
         try {
-            return $this->get("/payments/checkout/{$session_id}/verify");
+            return $this->post("/payments/checkout/{$session_id}/verify");
         } catch (GuzzleException $e) {
             error_log("[SendMate Checkout] Failed to get checkout session status {$session_id}: " . $e->getMessage());
             throw $e;

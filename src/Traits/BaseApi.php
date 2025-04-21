@@ -52,7 +52,9 @@ trait BaseApi
     public function post(string $path, array $data = []): array
     {
         try{
-            $response = $this->client->post("/v1{$path}", ['json' => $data]);
+            $response = $this->client->post("/v1{$path}", [
+                'json' => $data ?: (object)[] // Ensure we pass an empty object if no data
+            ]);
             return $this->parseResponse($response);
         } catch (GuzzleException $e) {
             error_log("[SendMate API] Failed to create resource at {$path}: " . $e->getMessage());
