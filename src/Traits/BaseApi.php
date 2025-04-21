@@ -63,6 +63,19 @@ trait BaseApi
     {
         return $this->client->delete("/v1{$path}");
     }
+
+
+     /**
+     * Parse the API response into the specified response type
+     * 
+     * @param ResponseInterface $response The API response
+     * @return mixed
+     */
+    private function parseResponse(ResponseInterface $response)
+    {
+        $data = json_decode($response->getBody()->getContents(), true);
+        return $data;
+    }
 } 
 
 

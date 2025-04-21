@@ -140,6 +140,7 @@ function handleMpesaStk(SendMate $sendmate) {
             'description' => $description
         ]);
 
+        
         echo json_encode([
             'success' => true,
             'message' => 'M-Pesa STK push initiated successfully',
