@@ -3,6 +3,7 @@
 include_once __DIR__ . '/client.php';
 include_once __DIR__ . '/handlers/mpesa.php';
 include_once __DIR__ . '/handlers/checkout.php';
+include_once __DIR__ . '/handlers/wallet.php';
 
 use SendMate\SendMate;
 
@@ -33,6 +34,18 @@ function handleApiRoutes(SendMate $sendmate) {
         case (preg_match('/^\/api\/sessions\/(.+)$/', $path, $matches) ? true : false):
             if ($method === 'GET') {
                 handleSessionStatus($sendmate, $matches[1]);
+            }
+            break;
+        case '/api/wallets':
+            if ($method === 'GET') {
+                handleGetWallets($sendmate);
+            }
+            break;
+        case (preg_match('/^\/api\/wallets\/(.+)$/', $path, $matches) ? true : false):
+            if ($method === 'GET') {
+                handleGetWallet($sendmate, $matches[1]);
+            } elseif ($method === 'POST' && strpos($path, '/set-default') !== false) {
+                handleSetDefaultWallet($sendmate, $matches[1]);
             }
             break;
         default:

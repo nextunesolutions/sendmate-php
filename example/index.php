@@ -29,6 +29,13 @@ switch ($path) {
     case '/mpesa':
         require __DIR__ . '/views/mpesa.php';
         break;
+    case '/wallets':
+        require __DIR__ . '/views/wallet.php';
+        break;
+    case (preg_match('/^\/wallets\/(.+)$/', $path, $matches) ? true : false):
+        $walletId = $matches[1];
+        require __DIR__ . '/views/wallet-detail.php';
+        break;
     case '/success':
         require __DIR__ . '/views/success.php';
         break;

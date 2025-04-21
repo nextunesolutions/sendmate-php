@@ -8,9 +8,9 @@ use SendMate\Checkout;
 
 class SendMate
 {
-    private Wallet $wallet;
-    private Collection $collection;
-    private Checkout $checkout;
+    public Wallet $wallet;
+    public Collection $collection;
+    public Checkout $checkout;
 
     public function __construct(string $apiKey, string $publishableKey, bool $isSandbox = false)
     {

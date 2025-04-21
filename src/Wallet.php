@@ -17,58 +17,45 @@ class Wallet
 
     /**
      * Get all wallets for the authenticated user
-     * @throws GuzzleException
+     *
+     * @return array|null
      */
-    public function getWallets(): ResponseInterface
+    public function get_wallets(): ?array
     {
-        try {
-            return $this->get('/payments/wallets');
-        } catch (GuzzleException $e) {
-            error_log("[SendMate Wallet] Failed to get wallets: " . $e->getMessage());
-            throw $e;
-        }
+        return $this->get('/payments/wallets');
     }
 
     /**
      * Get a specific wallet by ID
-     * @throws GuzzleException
+     *
+     * @param string $walletId
+     * @return array|null
      */
-    public function getWallet(string $walletId): ResponseInterface
+    public function get_wallet(string $walletId): ?array
     {
-        try {
-            return $this->get("/payments/wallets/{$walletId}");
-        } catch (GuzzleException $e) {
-            error_log("[SendMate Wallet] Failed to get wallet {$walletId}: " . $e->getMessage());
-            throw $e;
-        }
+        return $this->get("/payments/wallets/{$walletId}");
     }
 
     /**
      * Get transactions for a specific wallet
-     * @throws GuzzleException
+     *
+     * @param string $walletId
+     * @param array $params
+     * @return array|null
      */
-    public function getWalletTransactions(string $walletId, array $params = []): ResponseInterface
+    public function get_wallet_transactions(string $walletId, array $params = []): ?array
     {
-        try {
-            return $this->get("/payments/wallets/{$walletId}/transactions", $params);
-        } catch (GuzzleException $e) {
-            error_log("[SendMate Wallet] Failed to get transactions for wallet {$walletId}: " . $e->getMessage());
-            error_log("[SendMate Wallet] Query parameters: " . json_encode($params));
-            throw $e;
-        }
+        return $this->get("/payments/wallets/{$walletId}/transactions", $params);
     }
 
     /**
      * Set a wallet as default
-     * @throws GuzzleException
+     *
+     * @param string $walletId
+     * @return array|null
      */
-    public function setDefaultWallet(string $walletId): ResponseInterface
+    public function set_default_wallet(string $walletId): ?array
     {
-        try {
-            return $this->post("/payments/wallets/{$walletId}/set-default", []);
-        } catch (GuzzleException $e) {
-            error_log("[SendMate Wallet] Failed to set wallet {$walletId} as default: " . $e->getMessage());
-            throw $e;
-        }
+        return $this->post("/payments/wallets/{$walletId}/set-default", []);
     }
 } 
