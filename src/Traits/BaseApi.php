@@ -14,10 +14,10 @@ trait BaseApi
 
     public function init_trait(string $apiKey, string $publishableKey, bool $isSandbox = false)
     {
-        $base_url = $isSandbox ? 'https://api-sandbox.sendmate.finance/v1' : 'https://api.sendmate.finance/v1';
+        $base_url = $isSandbox ? 'https://api-sandbox.sendmate.finance' : 'https://api.sendmate.finance';
 
         error_log($base_url);
-        
+
         $this->apiKey = $apiKey;
         $this->publishableKey = $publishableKey;
         $this->client = new Client([
@@ -30,13 +30,14 @@ trait BaseApi
             ]
         ]);
     }
+    
 
     /**
      * @throws GuzzleException
      */
     public function get(string $path, array $query = []): ResponseInterface
     {
-        return $this->client->get($path, ['query' => $query]);
+        return $this->client->get("/v1{$path}", ['query' => $query]);
     }
 
     /**
@@ -44,7 +45,7 @@ trait BaseApi
      */
     public function post(string $path, array $data = []): ResponseInterface
     {
-        return $this->client->post($path, ['json' => $data]);
+        return $this->client->post("/v1{$path}", ['json' => $data]);
     }
 
     /**
@@ -52,7 +53,7 @@ trait BaseApi
      */
     public function put(string $path, array $data = []): ResponseInterface
     {
-        return $this->client->put($path, ['json' => $data]);
+        return $this->client->put("/v1{$path}", ['json' => $data]);
     }
 
     /**
@@ -60,7 +61,7 @@ trait BaseApi
      */
     public function delete(string $path): ResponseInterface
     {
-        return $this->client->delete($path);
+        return $this->client->delete("/v1{$path}");
     }
 } 
 
