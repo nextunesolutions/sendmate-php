@@ -33,10 +33,10 @@ class Checkout
      * Create a new checkout session
      *
      * @param array $data The checkout session data
-     * @return ResponseInterface
+     * @return array
      * @throws GuzzleException
      */
-    public function create_checkout_session(array $data): ResponseInterface
+    public function create_checkout_session(array $data)
     {
         try {
             return $this->post('/payments/checkout', $data);
@@ -50,10 +50,10 @@ class Checkout
     /**
      * Get all checkout sessions
      *
-     * @return ResponseInterface
+     * @return array
      * @throws GuzzleException
      */
-    public function get_sessions(): ResponseInterface
+    public function get_sessions()
     {
         try {
             return $this->get('/payments/sessions');
@@ -67,10 +67,10 @@ class Checkout
      * Get a specific checkout session by ID
      *
      * @param string $session_id The checkout session ID
-     * @return ResponseInterface
+     * @return array
      * @throws GuzzleException
      */
-    public function get_checkout_session(string $session_id): ResponseInterface
+    public function get_checkout_session(string $session_id)
     {
         try {
             return $this->get("/payments/checkout/{$session_id}");
@@ -84,10 +84,10 @@ class Checkout
      * Get the status of a specific checkout session
      *
      * @param string $session_id The checkout session ID
-     * @return ResponseInterface
+     * @return array
      * @throws GuzzleException
      */
-    public function get_checkout_session_status(string $session_id): ResponseInterface
+    public function get_checkout_session_status(string $session_id)
     {
         try {
             return $this->get("/payments/checkout/{$session_id}/verify");

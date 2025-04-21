@@ -28,8 +28,12 @@ include __DIR__ . '/components/header.php';
             </select>
         </div>
 
-        <button type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-            Proceed to Payment
+        <button type="submit" id="submitButton" class="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 flex items-center justify-center">
+            <span id="buttonText">Proceed to Payment</span>
+            <svg id="loadingSpinner" class="hidden animate-spin ml-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
         </button>
     </form>
 </div>
@@ -37,6 +41,15 @@ include __DIR__ . '/components/header.php';
 <script>
 document.getElementById('checkoutForm').addEventListener('submit', async (e) => {
     e.preventDefault();
+    
+    const submitButton = document.getElementById('submitButton');
+    const buttonText = document.getElementById('buttonText');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    
+    // Disable button and show loading
+    submitButton.disabled = true;
+    buttonText.textContent = 'Processing...';
+    loadingSpinner.classList.remove('hidden');
     
     const formData = {
         amount: document.getElementById('amount').value,
@@ -59,9 +72,17 @@ document.getElementById('checkoutForm').addEventListener('submit', async (e) => 
             window.location.href = data.data.url;
         } else {
             alert(data.message || 'Failed to create checkout session');
+            // Reset button state on error
+            submitButton.disabled = false;
+            buttonText.textContent = 'Proceed to Payment';
+            loadingSpinner.classList.add('hidden');
         }
     } catch (error) {
         alert('An error occurred. Please try again.');
+        // Reset button state on error
+        submitButton.disabled = false;
+        buttonText.textContent = 'Proceed to Payment';
+        loadingSpinner.classList.add('hidden');
     }
 });
 </script>

@@ -37,7 +37,12 @@ trait BaseApi
      */
     public function get(string $path, array $query = []): ResponseInterface
     {
-        return $this->client->get("/v1{$path}", ['query' => $query]);
+        try{
+            return $this->parseResponse($this->client->get("/v1{$path}", ['query' => $query]));
+        } catch (GuzzleException $e) {
+            error_log("[SendMate API] Failed to get resource at {$path}: " . $e->getMessage());
+            throw $e;
+        }
     }
 
     /**
@@ -45,7 +50,12 @@ trait BaseApi
      */
     public function post(string $path, array $data = []): ResponseInterface
     {
-        return $this->client->post("/v1{$path}", ['json' => $data]);
+        try{
+            return $this->parseResponse($this->client->post("/v1{$path}", ['json' => $data]));
+        } catch (GuzzleException $e) {
+            error_log("[SendMate API] Failed to create resource at {$path}: " . $e->getMessage());
+            throw $e;
+        }
     }
 
     /**
@@ -53,15 +63,26 @@ trait BaseApi
      */
     public function put(string $path, array $data = []): ResponseInterface
     {
-        return $this->client->put("/v1{$path}", ['json' => $data]);
+        try{
+            return $this->parseResponse($this->client->put("/v1{$path}", ['json' => $data]));
+        } catch (GuzzleException $e) {
+            error_log("[SendMate API] Failed to update resource at {$path}: " . $e->getMessage());
+            throw $e;
+        }
     }
 
     /**
      * @throws GuzzleException
      */
     public function delete(string $path): ResponseInterface
+        
     {
-        return $this->client->delete("/v1{$path}");
+        try{
+            return $this->parseResponse($this->client->delete("/v1{$path}"));
+        } catch (GuzzleException $e) {
+            error_log("[SendMate API] Failed to delete resource at {$path}: " . $e->getMessage());
+            throw $e;
+        }
     }
 
 
@@ -73,7 +94,18 @@ trait BaseApi
      */
     private function parseResponse(ResponseInterface $response)
     {
-        $data = json_decode($response->getBody()->getContents(), true);
+        $responseBody = $response->getBody()->getContents();
+        $data = json_decode($responseBody, true);
+        
+        // Log successful response details
+        error_log("[SendMate API] Response Status: " . $response->getStatusCode());
+        // error_log("[SendMate API] Response Headers: " . json_encode($response->getHeaders()));
+        error_log("[SendMate API] Response Body: " . $responseBody);
+        
+        if (isset($data['success']) && $data['success']) {
+            error_log("[SendMate API] Success Response: " . json_encode($data));
+        }
+        
         return $data;
     }
 } 

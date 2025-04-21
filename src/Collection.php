@@ -30,7 +30,7 @@ class Collection
     {
         try {
             $response = $this->post('/payments/mpesa/stkpush', $data);
-            return  $this->parseResponse($response);
+            return  $response;
         } catch (GuzzleException $e) {
             error_log("[SendMate Collection] Failed to initiate M-Pesa STK Push: " . $e->getMessage());
             error_log("[SendMate Collection] Request data: " . json_encode($data));
@@ -49,7 +49,7 @@ class Collection
     {
         try {
             $response = $this->get("/payments/mpesa/check-transaction-status/{$reference}");
-            return $this->parseResponse($response);
+            return $response;
         } catch (GuzzleException $e) {
             error_log("[SendMate Collection] Failed to check M-Pesa status for reference {$reference}: " . $e->getMessage());
             throw $e;
