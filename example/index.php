@@ -145,8 +145,7 @@ function handleMpesaStk(SendMate $sendmate) {
             'success' => true,
             'message' => 'M-Pesa STK push initiated successfully',
             'data' => [
-                'reference' => $response->reference,
-                'status' => $response->status
+                'reference' => $response['reference'],
             ]
         ]);
     } catch (Exception $e) {

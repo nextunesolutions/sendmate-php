@@ -23,14 +23,14 @@ class Collection
      * Initiate an M-Pesa STK Push payment
      * 
      * @param array $data The payment data containing phone number, amount, etc.
-     * @return MpesaDepositResponse
+     * @return array The response from the API
      * @throws GuzzleException
      */
-    public function mpesaStkPush(array $data): MpesaDepositResponse
+    public function mpesaStkPush(array $data)
     {
         try {
             $response = $this->post('/payments/mpesa/stkpush', $data);
-            return $this->parseResponse($response);
+            return  $this->parseResponse($response);
         } catch (GuzzleException $e) {
             error_log("[SendMate Collection] Failed to initiate M-Pesa STK Push: " . $e->getMessage());
             error_log("[SendMate Collection] Request data: " . json_encode($data));
@@ -42,10 +42,10 @@ class Collection
      * Check the status of an M-Pesa transaction
      * 
      * @param string $reference The transaction reference
-     * @return MpesaTransactionStatusResponse
+     * @return array The response from the API
      * @throws GuzzleException
      */
-    public function mpesaCheckStatus(string $reference): MpesaTransactionStatusResponse
+    public function mpesaCheckStatus(string $reference)
     {
         try {
             $response = $this->get("/payments/mpesa/check-transaction-status/{$reference}");
