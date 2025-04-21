@@ -15,57 +15,57 @@ class Collection
         $this->init_trait($apiKey, $publishableKey, $isSandbox);
     }
 
+
+
+
+
     /**
+     * Initiate an M-Pesa STK Push payment
+     * 
+     * @param array $data The payment data containing phone number, amount, etc.
+     * @return MpesaDepositResponse
      * @throws GuzzleException
      */
-    public function initiate(array $data): ResponseInterface
+    public function mpesaStkPush(array $data): MpesaDepositResponse
     {
         try {
-            return $this->post('/collections', $data);
+            $response = $this->post('/payments/mpesa/stkpush', $data);
+            return $this->parseResponse($response, MpesaDepositResponse::class);
         } catch (GuzzleException $e) {
-            error_log("[SendMate Collection] Failed to initiate collection: " . $e->getMessage());
+            error_log("[SendMate Collection] Failed to initiate M-Pesa STK Push: " . $e->getMessage());
             error_log("[SendMate Collection] Request data: " . json_encode($data));
             throw $e;
         }
     }
 
     /**
+     * Check the status of an M-Pesa transaction
+     * 
+     * @param string $reference The transaction reference
+     * @return MpesaTransactionStatusResponse
      * @throws GuzzleException
      */
-    public function get(string $collectionId): ResponseInterface
+    public function mpesaCheckStatus(string $reference): MpesaTransactionStatusResponse
     {
         try {
-            return $this->get("/collections/{$collectionId}");
+            $response = $this->get("/payments/mpesa/check-transaction-status/{$reference}");
+            return $this->parseResponse($response, MpesaTransactionStatusResponse::class);
         } catch (GuzzleException $e) {
-            error_log("[SendMate Collection] Failed to get collection {$collectionId}: " . $e->getMessage());
+            error_log("[SendMate Collection] Failed to check M-Pesa status for reference {$reference}: " . $e->getMessage());
             throw $e;
         }
     }
 
     /**
-     * @throws GuzzleException
+     * Parse the API response into the specified response type
+     * 
+     * @param ResponseInterface $response The API response
+     * @param string $responseType The response type class name
+     * @return mixed
      */
-    public function list(array $query = []): ResponseInterface
+    private function parseResponse(ResponseInterface $response, string $responseType)
     {
-        try {
-            return $this->get('/collections', $query);
-        } catch (GuzzleException $e) {
-            error_log("[SendMate Collection] Failed to list collections: " . $e->getMessage());
-            error_log("[SendMate Collection] Query parameters: " . json_encode($query));
-            throw $e;
-        }
-    }
-
-    /**
-     * @throws GuzzleException
-     */
-    public function cancel(string $collectionId): ResponseInterface
-    {
-        try {
-            return $this->post("/collections/{$collectionId}/cancel");
-        } catch (GuzzleException $e) {
-            error_log("[SendMate Collection] Failed to cancel collection {$collectionId}: " . $e->getMessage());
-            throw $e;
-        }
+        $data = json_decode($response->getBody()->getContents(), true);
+        return new $responseType($data);
     }
 } 

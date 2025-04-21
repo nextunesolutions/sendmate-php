@@ -62,4 +62,32 @@ interface PaginationParams {
 
 interface TransactionPaginatedResponse extends PaginatedResponse {
     public function getResults(): array; // Array of Transaction
+}
+
+interface MpesaDepositRequest {
+    public function getPhoneNumber(): string;
+    public function getAmount(): string;
+    public function getDescription(): string;
+    public function getReference(): string;
+    public function getMetadata(): array;
+}
+
+interface MpesaDepositResponse {
+    public function getCheckoutRequestId(): string;
+    public function getMerchantRequestId(): string;
+    public function getResponseCode(): string;
+    public function getResponseDescription(): string;
+    public function getCustomerMessage(): string;
+    public function getReference(): string;
+}
+
+interface MpesaTransactionStatusResponse {
+    public function getTransactionId(): string;
+    public function getReference(): string;
+    public function getAmount(): string;
+    public function getStatus(): string;
+    public function getDescription(): string;
+    public function getPhoneNumber(): string;
+    public function getCreatedAt(): string;
+    public function getUpdatedAt(): string;
 } 

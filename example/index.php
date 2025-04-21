@@ -134,7 +134,7 @@ function handleMpesaStk(SendMate $sendmate) {
             return;
         }
 
-        $response = $sendmate->collection()->initiate([
+        $response = $sendmate->collection()->mpesaStkPush([
             'amount' => (float)$amount,
             'phone_number' => $phone,
             'description' => $description
@@ -162,7 +162,7 @@ function handleMpesaStatus(SendMate $sendmate, string $reference) {
     header('Content-Type: application/json');
     
     try {
-        $status = $sendmate->collection()->get($reference);
+        $status = $sendmate->collection()->mpesaCheckStatus($reference);
         
         echo json_encode([
             'success' => true,

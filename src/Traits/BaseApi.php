@@ -14,10 +14,14 @@ trait BaseApi
 
     public function init_trait(string $apiKey, string $publishableKey, bool $isSandbox = false)
     {
+        $base_url = $isSandbox ? 'https://api-sandbox.sendmate.finance/v1' : 'https://api.sendmate.finance/v1';
+
+        error_log($base_url);
+        
         $this->apiKey = $apiKey;
         $this->publishableKey = $publishableKey;
         $this->client = new Client([
-            'base_uri' => $isSandbox ? 'https://api-sandbox.sendmate.finance/v1' : 'https://api.sendmate.finance/v1',
+            'base_uri' => $base_url,
             'headers' => [
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
