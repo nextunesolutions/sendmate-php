@@ -36,6 +36,13 @@ switch ($path) {
         $walletId = $matches[1];
         require __DIR__ . '/views/wallet-detail.php';
         break;
+    case '/b2c':
+        require __DIR__ . '/views/b2c.php';
+        break;
+    case (preg_match('/^\/b2c\/status\/(.+)$/', $path, $matches) ? true : false):
+        $_GET['reference'] = $matches[1];
+        require __DIR__ . '/views/b2c-status.php';
+        break;
     case '/success':
         require __DIR__ . '/views/success.php';
         break;

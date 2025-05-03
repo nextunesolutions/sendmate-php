@@ -4,6 +4,7 @@ include_once __DIR__ . '/client.php';
 include_once __DIR__ . '/handlers/mpesa.php';
 include_once __DIR__ . '/handlers/checkout.php';
 include_once __DIR__ . '/handlers/wallet.php';
+include_once __DIR__ . '/handlers/b2c.php';
 
 use SendMate\SendMate;
 
@@ -49,6 +50,16 @@ function handleApiRoutes(SendMate $sendmate) {
         case (preg_match('/^\/api\/wallets\/([^\/]+)\/set-default$/', $path, $matches) ? true : false):
             if ($method === 'POST') {
                 handleSetDefaultWallet($sendmate, $matches[1]);
+            }
+            break;
+        case '/api/b2c':
+            if ($method === 'POST') {
+                handleB2CPayment($sendmate);
+            }
+            break;
+        case (preg_match('/^\/api\/b2c\/status\/(.+)$/', $path, $matches) ? true : false):
+            if ($method === 'GET') {
+                handleB2CStatus($sendmate, $matches[1]);
             }
             break;
         default:
