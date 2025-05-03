@@ -112,6 +112,93 @@ Response:
 $status = $sendmate->collection()->mpesaCheckStatus('MPESA_REF_123');
 ```
 
+### 3. B2C Payments
+
+The SDK supports B2C (Business to Consumer) payments, allowing you to send money to mobile numbers.
+
+#### Initiating B2C Payment
+
+```php
+$response = $sendmate->b2c->mpesa(
+    '+254712345678',  // Recipient's phone number
+    '1000',          // Amount to send
+    'Salary payment' // Transaction description
+);
+```
+
+Response:
+```json
+{
+    "message": "B2C payment initiated successfully",
+    "reference": "TXN-4CD1B5977C",
+    "status": "PENDING"
+}
+```
+
+#### Checking B2C Transaction Status
+
+```php
+$status = $sendmate->b2c->status('TXN-4CD1B5977C');
+```
+
+Response:
+```json
+{
+    "message": "Transaction status retrieved successfully",
+    "status": "COMPLETED",
+    "amount": 1000,
+    "currency": "KES",
+    "type": "DEBIT",
+    "created_at": "2025-05-03T09:53:37.352633Z",
+    "updated_at": "2025-05-03T09:53:40.177699Z"
+}
+```
+
+#### Getting Transaction Details
+
+```php
+$details = $sendmate->b2c->details('TXN-4CD1B5977C');
+```
+
+#### B2C Payment Flow
+
+1. Check wallet balance before initiating payment
+2. Initiate B2C payment with recipient details
+3. Monitor transaction status
+4. Handle success/failure scenarios
+
+Example with error handling:
+```php
+try {
+    // Check wallet balance first
+    $wallet = $sendmate->wallet->get_wallet('wallet_id');
+    if ($wallet['balance'] < $amount) {
+        throw new Exception('Insufficient wallet balance');
+    }
+
+    // Initiate B2C payment
+    $response = $sendmate->b2c->mpesa(
+        $phone_number,
+        $amount,
+        $description
+    );
+
+    // Store transaction reference for tracking
+    $reference = $response['reference'];
+
+    // Check status after a delay
+    $status = $sendmate->b2c->status($reference);
+    
+} catch (Exception $e) {
+    // Handle error
+    http_response_code(400);
+    echo json_encode([
+        'success' => false,
+        'message' => $e->getMessage()
+    ]);
+}
+```
+
 ## Error Handling
 
 All API calls should be wrapped in try-catch blocks to handle potential errors:
